@@ -36,7 +36,7 @@ const app = Vue.createApp({
                 this.monsterHealth + this.monsterHealingPower,
                 100
             );
-            this.attackPlayer(0.2);
+            this.attackPlayer(0.3);
         },
         attackPlayer(multiplier = 1) {
             const damageDealt = this.strikeCalc(this.monsterPower) * multiplier;
@@ -52,13 +52,13 @@ const app = Vue.createApp({
             this.currentRound = 0;
             this.logMessages = [];
         },
-        addLogMessage(from, to, value) {
-            this.logMessages.unshift({
-                actionBy: from,
-                actionTo: to,
-                actionValue: value,
-            });
-        },
+        // addLogMessage(from, to, value) {  // #TODO - finish that shit
+        //     this.logMessages.unshift({
+        //         actionBy: from,
+        //         actionTo: to,
+        //         actionValue: value,
+        //     });
+        // },
     },
     computed: {
         monsterBarStyle() {
