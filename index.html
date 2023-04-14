@@ -25,17 +25,22 @@
         <div class="healthbar__value" :style="monsterBarStyle"></div>
       </div>
     </section>
-    <section id=" player" class="container">
+    <section id="player" class="container">
       <h2>Player's Health</h2>
       <div class="healthbar">
         <div class="healthbar__value" :style="playerBarStyle"></div>
       </div>
     </section>
-    <section id="controls">
+    <section id="controls" :style="{ display : isGameOver ? 'none' : 'flex'}">
       <button @click="attackMonster">ATTACK</button>
-      <button @click="specialAttack">SPECIAL ATTACK</button>
+      <button @click="specialAttack" :disabled="!isSpecialAttack">SPECIAL ATTACK</button>
       <button @click="heal">HEAL</button>
-      <button>SURRENDER</button>
+      <!-- <button @click="surrender">SURRENDER</button> -->
+    </section>
+    <section id="menu" :style="{display: isGameOver ? 'flex' : 'none'}">
+      <div v-if="isPlayerWinner">Congratulations! The monster was slain. You are victorious!</div>
+      <div v-else="">You are dead... another hero shall try to slay the monster...</div>
+      <button @click="startNewGame">PLAY AGAIN</button>
     </section>
     <section id="log" class="container">
       <h2>Battle Log</h2>
