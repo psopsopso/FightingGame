@@ -2,13 +2,15 @@ const app = Vue.createApp({
     data() {
         return {
             playerHealth: 100,
-            playerPower: 15,
-            healingPower: 12,
+            playerPower: 20,
+            playerHealingPower: 10,
             monsterHealth: 100,
-            monsterPower: 20,
+            monsterPower: 30,
+            monsterHealingPower: 5,
             currentRound: 0,
             isGameOver: false,
             isPlayerWinner: null,
+            logMessages: [],
         };
     },
     methods: {
@@ -18,35 +20,44 @@ const app = Vue.createApp({
             this.monsterHealth = Math.max(this.monsterHealth - damageDealt, 0);
             this.attackPlayer();
         },
-        attackPlayer() {
-            const damageDealt = this.strikeCalc(this.monsterPower);
-            this.playerHealth = Math.max(this.playerHealth - damageDealt, 0);
-        },
-        strikeCalc(power) {
-            return Math.floor(Math.random() * power);
-        },
-        heal() {
-            this.currentRound += 1;
-            this.playerHealth = Math.min(
-                this.playerHealth + this.healingPower,
-                100
-            );
-            this.attackPlayer();
-        },
         specialAttack() {
             this.currentRound += 1;
             const damageDealt = this.strikeCalc(this.playerPower * 2);
             this.monsterHealth = Math.max(this.monsterHealth - damageDealt, 0);
             this.attackPlayer();
         },
-        surrender() {
-            this.isGameOver = true;
+        heal() {
+            this.currentRound += 1;
+            this.playerHealth = Math.min(
+                this.playerHealth + this.playerHealingPower,
+                100
+            );
+            this.monsterHealth = Math.min(
+                this.monsterHealth + this.monsterHealingPower,
+                100
+            );
+            this.attackPlayer(0.2);
+        },
+        attackPlayer(multiplier = 1) {
+            const damageDealt = this.strikeCalc(this.monsterPower) * multiplier;
+            this.playerHealth = Math.max(this.playerHealth - damageDealt, 0);
+        },
+        strikeCalc(power) {
+            return Math.floor(Math.random() * power);
         },
         startNewGame() {
             this.isGameOver = false;
             this.playerHealth = 100;
             this.monsterHealth = 100;
             this.currentRound = 0;
+            this.logMessages = [];
+        },
+        addLogMessage(from, to, value) {
+            this.logMessages.unshift({
+                actionBy: from,
+                actionTo: to,
+                actionValue: value,
+            });
         },
     },
     computed: {
