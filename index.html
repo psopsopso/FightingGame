@@ -37,8 +37,8 @@
       <button @click="playerHeal">HEAL</button>
     </section>
     <section id="menu" :style="{display: isGameOver ? 'flex' : 'none'}">
-      <div v-if="isPlayerWinner">MONSTER SLAINED. (ggwp)</div>
-      <div v-else="">YOU DIED (lol)</div>
+      <div v-if="isPlayerWinner">MONSTER SLAYED (ggwp)!</div>
+      <div v-else="">YOU DIED (lol)!</div>
       <button @click="startNewGame">PLAY AGAIN</button>
     </section>
   </div>
