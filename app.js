@@ -5,7 +5,7 @@ const app = Vue.createApp({
             playerPower: 20,
             playerHealingPower: 10,
             monsterHealth: 100,
-            monsterPower: 30,
+            monsterPower: 25,
             monsterHealingPower: 5,
             currentRound: 0,
             isGameOver: false,
@@ -18,15 +18,21 @@ const app = Vue.createApp({
             this.currentRound += 1;
             const damageDealt = this.strikeCalc(this.playerPower);
             this.monsterHealth = Math.max(this.monsterHealth - damageDealt, 0);
+            const monsterImage = document.querySelector(".monster-img");
+            monsterImage.classList.add("monster-hit");
+            setTimeout(() => {
+                monsterImage.classList.remove("monster-hit");
+            }, 500);
             this.attackPlayer();
         },
         specialAttack() {
             this.currentRound += 1;
-            const damageDealt = this.strikeCalc(this.playerPower * 2);
+            const damageDealt = this.strikeCalc(this.playerPower) * 2;
+
             this.monsterHealth = Math.max(this.monsterHealth - damageDealt, 0);
             this.attackPlayer();
         },
-        heal() {
+        playerHeal() {
             this.currentRound += 1;
             this.playerHealth = Math.min(
                 this.playerHealth + this.playerHealingPower,
@@ -51,14 +57,15 @@ const app = Vue.createApp({
             this.monsterHealth = 100;
             this.currentRound = 0;
             this.logMessages = [];
+            const monsterImage = document.querySelector("img");
+            monsterImage.style.opacity = 1;
         },
-        // addLogMessage(from, to, value) {  // #TODO - finish that shit
-        //     this.logMessages.unshift({
-        //         actionBy: from,
-        //         actionTo: to,
-        //         actionValue: value,
-        //     });
-        // },
+
+        animateMonsterDeath() {
+            const monsterImage = document.querySelector("img");
+            monsterImage.style.transition = "opacity 1s ease-in-out";
+            monsterImage.style.opacity = 0;
+        },
     },
     computed: {
         monsterBarStyle() {
@@ -85,6 +92,8 @@ const app = Vue.createApp({
                 setTimeout(() => {
                     this.isGameOver = true;
                     this.isPlayerWinner = true;
+                    this.isMonsterAlive = false;
+                    this.animateMonsterDeath();
                 }, 10);
             }
         },

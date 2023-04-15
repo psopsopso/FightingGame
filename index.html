@@ -17,10 +17,10 @@
   </header>
   <div id="game">
     <section id="monster-card" class="container">
-      <img src="./assets/tiamat.png" alt="tiamat">
+      <img class="monster-img monster-hit" src="./assets/tiamat.png" alt="tiamat">
     </section>
     <section id="monster" class="container">
-      <h2>Monster Health</h2>
+      <h2>Monster's Health</h2>
       <div class="healthbar">
         <div class="healthbar__value" :style="monsterBarStyle"></div>
       </div>
@@ -34,17 +34,12 @@
     <section id="controls" :style="{ display : isGameOver ? 'none' : 'flex'}">
       <button @click="attackMonster">ATTACK</button>
       <button @click="specialAttack" :disabled="!isSpecialAttack">SPECIAL ATTACK</button>
-      <button @click="heal">HEAL</button>
-      <!-- <button @click="surrender">SURRENDER</button> -->
+      <button @click="playerHeal">HEAL</button>
     </section>
     <section id="menu" :style="{display: isGameOver ? 'flex' : 'none'}">
       <div v-if="isPlayerWinner">Congratulations! The monster was slain. You are victorious!</div>
-      <div v-else="">You are dead... another hero shall try to slay the monster...</div>
+      <div v-else="">You are dead... another hero shall need to slay the monster...</div>
       <button @click="startNewGame">PLAY AGAIN</button>
-    </section>
-    <section id="log" class="container">
-      <h2>Battle Log</h2>
-      <ul></ul>
     </section>
   </div>
 </body>
