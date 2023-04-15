@@ -38,8 +38,8 @@
     </section>
     <section id="menu" :style="{display: isGameOver ? 'flex' : 'none'}">
       <div v-if="isPlayerWinner">Congratulations! The monster was slain. You are victorious (gg wp)!</div>
-      <div v-else="">You are dead... another hero shall slay Tiamat (also, you suck, lol) div>
-        <button @click="startNewGame">PLAY AGAIN</button>
+      <div v-else="">You are dead... another hero shall slay Tiamat (also, you suck, lol) <div>
+          <button @click="startNewGame">PLAY AGAIN</button>
     </section>
   </div>
 </body>
